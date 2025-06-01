@@ -17,9 +17,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { useToast } from "@/components/ui/use-toast"
 
-// QR Code component
-import QRCode from "react-qr-code"
-
 type MenuItem = {
   id: string
   name: string
@@ -50,16 +47,7 @@ export default function MenuPage() {
   })
   const [cart, setCart] = useState<CartItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
-  const [showQRCode, setShowQRCode] = useState(false)
   const [orderNotes, setOrderNotes] = useState("")
-  const [menuUrl, setMenuUrl] = useState("")
-
-  // Set the menu URL for QR code once the component mounts
-  useEffect(() => {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
-                   (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000')
-    setMenuUrl(`${baseUrl}/menu`)
-  }, [])
 
   const handleReservationSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -129,33 +117,6 @@ export default function MenuPage() {
     alert(`Order placed successfully! Total: KSh ${calculateTotal().toLocaleString()}`)
     setCart([])
     setCartOpen(false)
-  }
-
-  const downloadQRCode = () => {
-    const svg = document.getElementById("menu-qr-code")
-    if (!svg) return
-
-    const svgData = new XMLSerializer().serializeToString(svg)
-    const canvas = document.createElement("canvas")
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-
-    const img = new window.Image()
-    img.crossOrigin = "Anonymous"
-
-    img.onload = () => {
-      canvas.width = img.width
-      canvas.height = img.height
-      ctx.drawImage(img, 0, 0)
-      const pngFile = canvas.toDataURL("image/png")
-
-      const downloadLink = document.createElement("a")
-      downloadLink.download = "edens-restaurant-menu-qr.png"
-      downloadLink.href = pngFile
-      downloadLink.click()
-    }
-
-    img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)))
   }
 
   // Menu items with IDs and numeric price values
@@ -363,16 +324,6 @@ export default function MenuPage() {
             <span className="text-xl font-semibold tracking-tight text-amber-900">Eden's Restaurant</span>
           </div>
           <div className="flex items-center gap-4">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowQRCode(true)}
-              className="hidden md:flex items-center gap-2"
-            >
-              <Download className="h-4 w-4" />
-              Menu QR Code
-            </Button>
-
             <Sheet open={cartOpen} onOpenChange={setCartOpen}>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon" className="relative">
@@ -477,7 +428,7 @@ export default function MenuPage() {
         <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Lasagna-po6wwcipX6qtd2vn2TUUbShPaTr5S2.jpeg"
+              src="/placeholder-menu.jpg"
               alt="Menu background"
               fill
               className="object-cover brightness-50"
@@ -496,14 +447,6 @@ export default function MenuPage() {
               >
                 <ShoppingCart className="mr-2 h-4 w-4" />
                 View Order
-              </Button>
-              <Button
-                variant="outline"
-                className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-amber-800"
-                onClick={() => setShowQRCode(true)}
-              >
-                <Download className="mr-2 h-4 w-4" />
-                Menu QR Code
               </Button>
             </div>
           </div>
@@ -732,38 +675,6 @@ export default function MenuPage() {
           </div>
         </section>
       </main>
-
-      {/* QR Code Modal */}
-      {showQRCode && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-bold text-amber-900">Menu QR Code</h2>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowQRCode(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-
-            <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg">
-              <div className="p-4 bg-white rounded-lg shadow-sm border">
-                <QRCode id="menu-qr-code" value={menuUrl} size={200} level="H" />
-              </div>
-              <p className="text-center text-sm text-muted-foreground mt-4 mb-6">
-                Scan this QR code to view our menu on your device
-              </p>
-              <Button onClick={downloadQRCode} className="bg-amber-700 hover:bg-amber-800 text-white">
-                <Download className="mr-2 h-4 w-4" />
-                Download QR Code
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Reservation Modal */}
       {isReservationOpen && (

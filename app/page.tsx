@@ -84,7 +84,7 @@ export default function RestaurantLanding() {
         <section id="home" className="relative h-[80vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Eden%27s%20restaurant-t99GR4PTT2ynHVJX8zkcLlYjPCAYhp.jpeg"
+              src="/placeholder-restaurant-interior.jpg"
               alt="Restaurant interior"
               fill
               className="object-cover brightness-50"
@@ -141,7 +141,7 @@ export default function RestaurantLanding() {
               </div>
               <div className="relative h-[400px] rounded-lg overflow-hidden">
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Outerior-Fw7jcgVTDB9aMfPD8IrjhfBWAQjI9a.jpeg"
+                  src="/placeholder-restaurant-outdoor.jpg"
                   alt="Restaurant outdoor dining area"
                   fill
                   className="object-cover"
