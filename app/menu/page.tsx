@@ -56,8 +56,9 @@ export default function MenuPage() {
 
   // Set the menu URL for QR code once the component mounts
   useEffect(() => {
-    // In a real app, this would be your actual domain
-    setMenuUrl(window.location.href)
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+                   (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000')
+    setMenuUrl(`${baseUrl}/menu`)
   }, [])
 
   const handleReservationSubmit = (e: React.FormEvent) => {
@@ -137,12 +138,15 @@ export default function MenuPage() {
     const svgData = new XMLSerializer().serializeToString(svg)
     const canvas = document.createElement("canvas")
     const ctx = canvas.getContext("2d")
-    const img = new Image()
+    if (!ctx) return
+
+    const img = new window.Image()
+    img.crossOrigin = "Anonymous"
 
     img.onload = () => {
       canvas.width = img.width
       canvas.height = img.height
-      ctx?.drawImage(img, 0, 0)
+      ctx.drawImage(img, 0, 0)
       const pngFile = canvas.toDataURL("image/png")
 
       const downloadLink = document.createElement("a")
@@ -151,7 +155,7 @@ export default function MenuPage() {
       downloadLink.click()
     }
 
-    img.src = "data:image/svg+xml;base64," + btoa(svgData)
+    img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)))
   }
 
   // Menu items with IDs and numeric price values
