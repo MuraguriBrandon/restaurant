@@ -301,11 +301,11 @@ export default function RestaurantLanding() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <MapPin className="h-5 w-5 text-amber-700" />
-                    <span>Pacific University, Thika Road, Nairobi, Kenya</span>
+                    <span>Diani Beach, Mombasa, Kenya</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Phone className="h-5 w-5 text-amber-700" />
-                    <span>+254 712 345 678</span>
+                    <span>+254 719 645 407</span>
                   </div>
                   <div className="pt-4">
                     <h3 className="text-lg font-medium mb-2">Opening Hours</h3>
