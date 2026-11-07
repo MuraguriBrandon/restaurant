@@ -4,6 +4,7 @@ import type React from "react"
 
 import Image from "next/image"
 import Link from "next/link"
+import { formatPrice } from "@/lib/currency"
 import { ArrowLeft, ShoppingCart, Plus, Minus, Trash2, Download, X } from "lucide-react"
 import { useState, useEffect } from "react"
 
@@ -21,7 +22,6 @@ type MenuItem = {
   id: string
   name: string
   description: string
-  price: string
   category: string
   spicy?: boolean
   vegetarian?: boolean
@@ -114,7 +114,7 @@ export default function MenuPage() {
     }
 
     // In a real app, this would submit the order to a backend
-    alert(`Order placed successfully! Total: KSh ${calculateTotal().toLocaleString()}`)
+    alert(`Order placed successfully! Total: ${formatPrice(calculateTotal())}`)
     setCart([])
     setCartOpen(false)
   }
@@ -125,7 +125,6 @@ export default function MenuPage() {
       id: "starter-1",
       name: "Salt & Pepper Squid",
       description: "Served with pickled cucumber roasted beetroot crème fraîche",
-      price: "KSh 850",
       priceValue: 850,
       category: "Starter",
       spicy: false,
@@ -137,7 +136,6 @@ export default function MenuPage() {
       id: "starter-2",
       name: "Thai Salmon and Shrimp",
       description: "Seasoned and grilled salmon, red mashed potatoes sautéed green beans and thai chili sauce",
-      price: "KSh 1,200",
       priceValue: 1200,
       category: "Starter",
       spicy: true,
@@ -149,7 +147,6 @@ export default function MenuPage() {
       id: "starter-3",
       name: "Shrimp Cocktail",
       description: "Chilled jumbo prawns served with classic tangy cocktail sauce de lemon",
-      price: "KSh 950",
       priceValue: 950,
       category: "Starter",
       spicy: false,
@@ -164,7 +161,6 @@ export default function MenuPage() {
       id: "main-1",
       name: "Ugali Served with Nyama Choma",
       description: "Maize porridge paired with grilled meat",
-      price: "KSh 1,100",
       priceValue: 1100,
       category: "Main Course",
       spicy: false,
@@ -176,7 +172,6 @@ export default function MenuPage() {
       id: "main-2",
       name: "Nyama Choma Served with Ugali & Kachumbari",
       description: "Grilled meat accompanied by maize porridge and a tomato-onion salad",
-      price: "KSh 1,200",
       priceValue: 1200,
       category: "Main Course",
       spicy: false,
@@ -188,7 +183,6 @@ export default function MenuPage() {
       id: "main-3",
       name: "Grilled Salmon",
       description: "Salmon fillet grilled with a honey-mustard glaze",
-      price: "KSh 1,400",
       priceValue: 1400,
       category: "Main Course",
       spicy: false,
@@ -200,7 +194,6 @@ export default function MenuPage() {
       id: "main-4",
       name: "Bulgogi",
       description: "Korean marinated grilled beef with a sweet-savory flavour",
-      price: "KSh 1,300",
       priceValue: 1300,
       category: "Main Course",
       spicy: false,
@@ -211,7 +204,6 @@ export default function MenuPage() {
       id: "main-5",
       name: "Oysters on the Half Shell",
       description: "Fresh oysters served with mignonette sauce",
-      price: "KSh 1,500",
       priceValue: 1500,
       category: "Main Course",
       spicy: false,
@@ -226,7 +218,6 @@ export default function MenuPage() {
       id: "dessert-1",
       name: "Red Velvet Cake",
       description: "Fluffy cocoa layered cake with sweet cream cheese frosting",
-      price: "KSh 450",
       priceValue: 450,
       category: "Dessert",
       spicy: false,
@@ -238,7 +229,6 @@ export default function MenuPage() {
       id: "dessert-2",
       name: "Strawberry Shortcake",
       description: "Layers of fresh strawberries, light vanilla sponge cake and creamy custard",
-      price: "KSh 500",
       priceValue: 500,
       category: "Dessert",
       spicy: false,
@@ -250,7 +240,6 @@ export default function MenuPage() {
       id: "dessert-3",
       name: "Ice Cream",
       description: "Choice vanilla, strawberry or chocolate. No-sugar-added ice cream is also available",
-      price: "KSh 300",
       priceValue: 300,
       category: "Dessert",
       spicy: false,
@@ -264,7 +253,6 @@ export default function MenuPage() {
       id: "drink-1",
       name: "Fresh Lemonade",
       description: "Freshly squeezed lemon juice with a hint of mint",
-      price: "KSh 250",
       priceValue: 250,
       category: "Non-Alcoholic",
       image:
@@ -274,7 +262,6 @@ export default function MenuPage() {
       id: "drink-2",
       name: "Mojito Mocktail",
       description: "Refreshing mint and lime mocktail",
-      price: "KSh 350",
       priceValue: 350,
       category: "Non-Alcoholic",
       image:
@@ -284,7 +271,6 @@ export default function MenuPage() {
       id: "drink-3",
       name: "Sparkling Rose",
       description: "Light and bubbly rosé wine",
-      price: "KSh 650",
       priceValue: 650,
       category: "Alcoholic",
       image:
@@ -294,7 +280,6 @@ export default function MenuPage() {
       id: "drink-4",
       name: "Mimosa",
       description: "Classic champagne and orange juice cocktail",
-      price: "KSh 550",
       priceValue: 550,
       category: "Alcoholic",
       image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mimosa-iOTj42OjzqhzDZMhofYiojlL7b6uep.jpeg",
@@ -303,7 +288,6 @@ export default function MenuPage() {
       id: "drink-5",
       name: "Two Islands",
       description: "House special cocktail blend",
-      price: "KSh 600",
       priceValue: 600,
       category: "Alcoholic",
       image:
@@ -355,7 +339,7 @@ export default function MenuPage() {
                         <div key={item.id} className="flex items-center justify-between py-4 border-b">
                           <div className="flex-1">
                             <h4 className="font-medium">{item.name}</h4>
-                            <p className="text-sm text-muted-foreground">{item.price}</p>
+                            <p className="text-sm text-muted-foreground">{formatPrice(item.priceValue)}</p>
                           </div>
                           <div className="flex items-center gap-2">
                             <Button
@@ -398,7 +382,7 @@ export default function MenuPage() {
 
                       <div className="flex justify-between font-medium text-lg mb-4">
                         <span>Total:</span>
-                        <span>KSh {calculateTotal().toLocaleString()}</span>
+                        <span className="whitespace-nowrap tabular-nums">{formatPrice(calculateTotal())}</span>
                       </div>
 
                       <Button
@@ -478,7 +462,7 @@ export default function MenuPage() {
                     <CardHeader>
                       <div className="flex items-start justify-between">
                         <CardTitle className="text-lg">{item.name}</CardTitle>
-                        <span className="text-lg font-semibold text-amber-800">{item.price}</span>
+                        <span className="text-lg font-semibold text-amber-800 whitespace-nowrap tabular-nums">{formatPrice(item.priceValue)}</span>
                       </div>
                       <div className="flex gap-2">
                         <Badge variant="secondary">{item.category}</Badge>
@@ -526,7 +510,7 @@ export default function MenuPage() {
                     <CardHeader>
                       <div className="flex items-start justify-between">
                         <CardTitle className="text-lg">{item.name}</CardTitle>
-                        <span className="text-lg font-semibold text-amber-800">{item.price}</span>
+                        <span className="text-lg font-semibold text-amber-800 whitespace-nowrap tabular-nums">{formatPrice(item.priceValue)}</span>
                       </div>
                       <div className="flex gap-2">
                         <Badge variant="secondary">{item.category}</Badge>
@@ -574,7 +558,7 @@ export default function MenuPage() {
                     <CardHeader>
                       <div className="flex items-start justify-between">
                         <CardTitle className="text-lg">{item.name}</CardTitle>
-                        <span className="text-lg font-semibold text-amber-800">{item.price}</span>
+                        <span className="text-lg font-semibold text-amber-800 whitespace-nowrap tabular-nums">{formatPrice(item.priceValue)}</span>
                       </div>
                       <div className="flex gap-2">
                         <Badge variant="secondary">{item.category}</Badge>
@@ -622,7 +606,7 @@ export default function MenuPage() {
                     <CardHeader>
                       <div className="flex items-start justify-between">
                         <CardTitle className="text-lg">{item.name}</CardTitle>
-                        <span className="text-lg font-semibold text-amber-800">{item.price}</span>
+                        <span className="text-lg font-semibold text-amber-800 whitespace-nowrap tabular-nums">{formatPrice(item.priceValue)}</span>
                       </div>
                       <div className="flex gap-2">
                         <Badge variant="secondary">{item.category}</Badge>
