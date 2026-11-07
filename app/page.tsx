@@ -4,6 +4,7 @@ import type React from "react"
 
 import Image from "next/image"
 import Link from "next/link"
+import { formatPrice } from "@/lib/currency"
 import { MapPin, Phone } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -170,17 +171,17 @@ export default function RestaurantLanding() {
                     {
                       name: "Nyama Choma",
                       description: "Traditional Kenyan roasted meat served with kachumbari salad",
-                      price: "KSh 950",
+                      price: 950,
                     },
                     {
                       name: "Ugali with Sukuma Wiki",
                       description: "Kenyan staple cornmeal with sautéed collard greens",
-                      price: "KSh 650",
+                      price: 650,
                     },
                     {
                       name: "Swahili Fish Curry",
                       description: "Fresh fish cooked in coconut curry with aromatic spices",
-                      price: "KSh 1,100",
+                      price: 1100,
                     },
                   ].map((item, i) => (
                     <div key={i} className="flex justify-between">
@@ -188,7 +189,7 @@ export default function RestaurantLanding() {
                         <h4 className="font-medium">{item.name}</h4>
                         <p className="text-sm text-muted-foreground">{item.description}</p>
                       </div>
-                      <span className="font-medium text-amber-800">{item.price}</span>
+                      <span className="font-medium text-amber-800 whitespace-nowrap tabular-nums">{formatPrice(item.price)}</span>
                     </div>
                   ))}
                 </div>
@@ -204,17 +205,17 @@ export default function RestaurantLanding() {
                     {
                       name: "Mediterranean Pasta",
                       description: "Fresh pasta with sun-dried tomatoes, olives, and feta cheese",
-                      price: "KSh 850",
+                      price: 850,
                     },
                     {
                       name: "Asian Stir Fry",
                       description: "Vegetables and choice of protein in a savory sauce with rice",
-                      price: "KSh 900",
+                      price: 900,
                     },
                     {
                       name: "Classic Burger",
                       description: "Juicy beef patty with cheese, lettuce, and special sauce",
-                      price: "KSh 750",
+                      price: 750,
                     },
                   ].map((item, i) => (
                     <div key={i} className="flex justify-between">
@@ -222,7 +223,7 @@ export default function RestaurantLanding() {
                         <h4 className="font-medium">{item.name}</h4>
                         <p className="text-sm text-muted-foreground">{item.description}</p>
                       </div>
-                      <span className="font-medium text-amber-800">{item.price}</span>
+                      <span className="font-medium text-amber-800 whitespace-nowrap tabular-nums">{formatPrice(item.price)}</span>
                     </div>
                   ))}
                 </div>
