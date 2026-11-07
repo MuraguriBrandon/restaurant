@@ -3,5 +3,5 @@ const shillingFormatter = new Intl.NumberFormat("en-KE", {
 })
 
 export function formatPrice(amount: number): string {
-  return `KSh ${shillingFormatter.format(amount)}/=`
+  return `Ksh ${shillingFormatter.format(amount)}`
 }
